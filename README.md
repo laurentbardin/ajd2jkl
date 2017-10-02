@@ -21,9 +21,12 @@ Or install it yourself as:
     $ gem install ajd2jkl
 
 ## Usage
+```apj2kl --help```
 
-NAME:
+Display:
+
 ```bash
+NAME:
     ApiJSDoc 2 Jekyll
 
   DESCRIPTION:
@@ -50,7 +53,11 @@ NAME:
         Display backtrace when an error occurs
 ```
 
-Sub command `parse`:
+Sub command `parse` (it's the default command launched):
+```ajd2jkl parse --help```
+
+Display:
+
 ```bash
 NAME:
 
