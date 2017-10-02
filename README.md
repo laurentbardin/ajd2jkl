@@ -22,7 +22,57 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+NAME:
+```bash
+    ApiJSDoc 2 Jekyll
+
+  DESCRIPTION:
+
+    Command to parse file code using apidocjs comment to generate API docs in Jekyll format
+
+  COMMANDS:
+
+    help  Display global or [command] help documentation
+    parse Parse the sources in given directories and generate the doc
+
+  GLOBAL OPTIONS:
+
+    --verbose
+
+
+    -h, --help
+        Display help documentation
+
+    -v, --version
+        Display version information
+
+    -t, --trace
+        Display backtrace when an error occurs
+```
+
+Sub command `parse`:
+```bash
+NAME:
+
+  parse
+
+SYNOPSIS:
+
+  ajd2jkl parse [options] [src_dir ..]
+
+DESCRIPTION:
+
+  Parse the sources in given directories and generate the doc
+
+OPTIONS:
+
+  --dry-run
+      Only parse don't generate the doc
+
+  --output
+      Output directory default is './doc'
+
+```
 
 ## Development
 
@@ -38,4 +88,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
