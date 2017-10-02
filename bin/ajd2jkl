@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'ajd2jkl'
+require 'commander'
+
+Commander.configure do
+    program :name, 'ApiJSDoc 2 Jekyll'
+    program :version, Ajd2jkl::VERSION
+    program :description, 'Command to parse file code using apidocjs comment to generate API docs in Jekyll format'
+
+    global_option('--verbose')
+
+    command :parse do |c|
+        c.syntax = 'ajd2jkl parse [options] [src_dir ..]'
+        c.description = 'Parse the sources in given directories and generate the doc'
+        c.option '--dry-run', 'Only parse don\'t generate the doc'
+        c.option '--output', String, 'Output directory default is \'./doc\''
+
+        c.action do |args, options|
+            options.default = { output: './doc', dry_run: false }
+            if args.count.zero?
+                say("<%= color('You should give at least one source directy', :red) %>")
+                command(:help).run(['parse'])
+                exit 1
+            end
+            Ajd2jkl::Base.new(options).launch args
+        end
+    end
+
+    default_command :parse
+end
