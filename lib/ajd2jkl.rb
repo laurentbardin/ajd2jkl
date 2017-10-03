@@ -2,6 +2,7 @@ require 'ajd2jkl/version'
 require 'ajd2jkl/glober'
 require 'ajd2jkl/file_parser'
 require 'ajd2jkl/content_parser'
+require 'commander'
 
 # main module
 module Ajd2jkl
@@ -36,6 +37,10 @@ module Ajd2jkl
 
     def self.erase_line
         Commander::UI.erase_line
+    end
+
+    def self.say(str)
+        Commander::UI.say(str)
     end
 
     def self.verbose_say(str)

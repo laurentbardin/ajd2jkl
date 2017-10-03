@@ -4,9 +4,7 @@ module Ajd2jkl
             # Common apiParam parser
             # multiline: true
             # @apiParam [(group)] [{type}] [field=defaultValue] [description]
-            class Param < AbstractCommonMultiline
-                attr_reader :group, :type, :field, :description
-
+            class Param < AbstractParametrable
                 # test regexp http://rubular.com/r/l9BCILbz8K
                 @@parser = %r{
                     ^\s*
@@ -41,10 +39,6 @@ module Ajd2jkl
                     @field = match[:field]
                     @description = match[:description] unless match[:description].nil?
                     @raw = nil
-                end
-
-                def end_multiline
-                    Ajd2jkl.verbose_say(" Found Param `#{@field}`#{@type ? ' of type '+@type : ''}#{@group ? " in group `#{@group}`" : ''}")
                 end
             end
         end

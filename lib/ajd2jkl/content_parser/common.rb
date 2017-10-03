@@ -57,6 +57,7 @@ module Ajd2jkl
                 # the pattern /^\s*\*\s*@apiNAME\s/ is always removed from the raw data
                 def initialize(raw)
                     @raw = raw.strip
+                    init
                     init_multiline
                 end
 
@@ -66,6 +67,10 @@ module Ajd2jkl
 
                 protected
 
+                def init
+                    @description = nil
+                end
+
                 def init_multiline
                     @multiline = false
                 end
@@ -74,7 +79,7 @@ module Ajd2jkl
             class AbstractCommonMultiline < AbstractCommon
                 def append_line(line)
                     return unless is_multiline?
-                    @description += line
+                    @description += "\n" + line
                 end
 
                 def end_multiline
@@ -91,6 +96,7 @@ module Ajd2jkl
     end
 end
 require 'ajd2jkl/content_parser/common/abstract_example'
+require 'ajd2jkl/content_parser/common/abstract_parametrable'
 require 'ajd2jkl/content_parser/common/deprecated'
 require 'ajd2jkl/content_parser/common/description'
 require 'ajd2jkl/content_parser/common/error_example'

@@ -4,8 +4,7 @@ module Ajd2jkl
             # Common apiError parser
             # multiline: true
             # @apiError [(group)] [{type}] field [description]
-            class Error < AbstractCommonMultiline
-                attr_reader :group, :type, :field, :description
+            class Error < AbstractParametrable
 
                 # test regexp http://rubular.com/r/UwvIDkAa8b
                 @@parser = %r{
@@ -30,10 +29,6 @@ module Ajd2jkl
                     @field = match[:field]
                     @description = match[:description] unless match[:description].nil?
                     @raw = nil
-                end
-
-                def end_multiline
-                    Ajd2jkl.verbose_say(" Found Error #{@field}#{@type ? ' of type '+@type : ''}#{@group ? " in group `#{@group}`" : ''}")
                 end
             end
         end

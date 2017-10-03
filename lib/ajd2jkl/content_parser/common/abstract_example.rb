@@ -37,6 +37,13 @@ module Ajd2jkl
                     return @example_type = self.class.to_s.sub('Ajd2jkl::ContentParser::CommonContent::', '') unless @example_type
                     @example_type
                 end
+
+                protected
+
+                def init
+                    super
+                    @type = @title = @example = @example_type = nil
+                end
             end
         end
     end

@@ -4,9 +4,7 @@ module Ajd2jkl
             # Common apiSuccess parser
             # multiline: true
             # @apiSuccess [(group)] [{type}] [field=defaultValue] [description]
-            class Success < AbstractCommonMultiline
-                attr_reader :group, :type, :field, :description
-
+            class Success < AbstractParametrable
                 # test regexp http://rubular.com/r/X4ArTZYSgI
                 @@parser = %r{
                     ^\s*
@@ -15,7 +13,7 @@ module Ajd2jkl
                         \{(?<type>(
                                 [a-zA-Z]\w*
                                 (\[\])?
-                                (=[-"'\w]*)?
+                                (=[-"'\w,]*)?
                                 |
                                 \[[A-Za-z][-\s\w]+\]\([^\s\)]*\)
                         ))\}\s
@@ -40,10 +38,6 @@ module Ajd2jkl
                     @field = match[:field]
                     @description = match[:description] unless match[:description].nil?
                     @raw = nil
-                end
-
-                def end_multiline
-                    Ajd2jkl.verbose_say(" Found Success `#{@field}`#{@type ? ' of type '+@type : ''} in group `#{@group}`")
                 end
             end
         end
