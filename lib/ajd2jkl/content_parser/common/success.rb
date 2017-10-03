@@ -10,19 +10,19 @@ module Ajd2jkl
                 # test regexp http://rubular.com/r/X4ArTZYSgI
                 @@parser = %r{
                     ^\s*
-                    (\((?<group>\w[-\w\s_]*)\)\s)?\s*
+                    (\((?<group>\w[-\w\s]*)\)\s)?\s*
                     (
                         \{(?<type>(
                                 [a-zA-Z]\w*
                                 (\[\])?
-                                (=["'\w-_]*)?
+                                (=[-"'\w]*)?
                                 |
-                                \[[A-Za-z][-_\s\w]+\]\([^\s\)]*\)
+                                \[[A-Za-z][-\s\w]+\]\([^\s\)]*\)
                         ))\}\s
                     )?\s*
                     (?<field>
                         \[?
-                            [-\w_\.]+
+                            [-\w\.]+
                         \]?
                     )
                     \s*
