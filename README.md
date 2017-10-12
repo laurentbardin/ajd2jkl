@@ -59,26 +59,35 @@ Sub command `parse` (it's the default command launched):
 Display:
 
 ```bash
-NAME:
 
-  parse
+  NAME:
 
-SYNOPSIS:
+    parse
 
-  ajd2jkl parse [options] [src_dir ..]
+  SYNOPSIS:
 
-DESCRIPTION:
+    ajd2jkl parse [options] [src_dir ..]
 
-  Parse the sources in given directories and generate the doc
+  DESCRIPTION:
 
-OPTIONS:
+    Parse the sources in given directories and generate the doc
 
-  --dry-run
-      Only parse don't generate the doc
-
-  --output
-      Output directory default is './doc'
-
+  OPTIONS:
+        
+    --dry-run 
+        Only parse don't generate the doc
+        
+    --debug 
+        Debug mode
+        
+    --output STRING 
+        Output directory default is './doc'
+        
+    --imgs STRING 
+        Images directory to import
+        
+    --config STRING 
+        Configuration file. Json or YAML format
 ```
 
 ## Development
