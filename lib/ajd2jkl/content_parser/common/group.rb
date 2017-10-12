@@ -10,7 +10,7 @@ module Ajd2jkl
                 def analyze
                     Ajd2jkl.verbose_say('Analyze Common/Group... ')
                     @name = @raw.gsub(/\s/, '')
-                    Ajd2jkl.verbose_say(" Found appartenance of a group called `#{@name}`")
+                    Ajd2jkl.verbose_say("Found appartenance of a group called `#{@name}`")
                     @raw = nil
                 end
             end

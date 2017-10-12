@@ -36,4 +36,8 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency 'minitest', '~> 5.0'
 
     spec.add_dependency 'commander'
+    spec.add_dependency 'jekyll', '~> 3.6.0'
+    spec.add_dependency 'rouge'
+    spec.add_dependency 'jekyll-watch'
+    spec.add_dependency 'jekyll-theme-hydejack', '~> 6.0'
 end

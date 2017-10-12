@@ -1,12 +1,15 @@
 require 'pathname'
+require 'weakref'
 
 module Ajd2jkl
     module ContentParser
         class Parser
-            def initialize(options)
+            def initialize(options, config)
                 @verbose = options.verbose
+                @order = config.key?('order') ? config['order'] : nil
                 @defines = {}
                 @entries = {}
+                @groups  = nil
             end
 
             def parse_defines(defines)
@@ -37,6 +40,7 @@ module Ajd2jkl
                         entry = Entry.parse d, @verbose
                         @entries[entry.name] = entry
                     rescue => e
+                        Ajd2jkl.say_error "Error raised parsing entry in file #{d.from_file}##{d.from_line}"
                         Ajd2jkl.say_error e.message
                         print e.backtrace.join("\n")
                         exit 1
@@ -44,6 +48,32 @@ module Ajd2jkl
                 }
                 parse_entities entries, parse_entry
                 check_uses 'Check Entries uses...', @entries
+            end
+
+            def groups
+                return @groups unless @groups.nil?
+                groups = {}
+                @entries.each_value do |entry|
+                    next unless entry.groups?
+                    entry.groups.each do |grp|
+                        wr = ::WeakRef.new entry
+                        if groups.key? grp.name
+                            groups[grp.name].push wr
+                        else
+                            groups[grp.name] = [wr]
+                        end
+                    end
+                end
+                if @order
+                    t_groups = {}
+                    p groups.keys
+                    @order.each { |name| groups.key?(name) && (t_groups[name] = groups[name]) }
+                    (groups.keys - @order).each { |name| t_groups[name] = groups[name] }
+                    p t_groups.keys
+                    groups = t_groups
+                    p groups.keys
+                end
+                @groups = groups
             end
 
             protected

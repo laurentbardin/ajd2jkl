@@ -39,8 +39,6 @@ module Ajd2jkl
 
             print "\tAPI Entries: #{@entries.count}\n"
             @entries.each { |klass| Ajd2jkl.verbose_say("\t\t#{klass.name}") } if @verbose
-
-            print "\nHappy?\n"
         end
     end
 end

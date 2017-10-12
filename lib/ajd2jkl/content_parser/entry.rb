@@ -1,22 +1,36 @@
 module Ajd2jkl
     module ContentParser
+        # parser for Entry annotation (@api)
         class Entry < AbstractParser
             attr_reader :path, :method
 
             protected
-            @@apiparser = %r{
+
+            API_PARSER = %r{
                 ^
                     \s*\*\s*@api\s
-                    \{(?<method>(get|GET|put|PUT|post|POST|delete|DELETE|patch|PATCH|head|HEAD|options|OPTIONS|trace|TRACE|connect|CONNECT))\}\s+
+                    \{(?<method>((
+                        get|GET|put|PUT|post|POST|
+                        delete|DELETE|patch|PATCH|
+                        head|HEAD|options|OPTIONS|
+                        trace|TRACE|connect|CONNECT
+                    )(\s?/\s?(
+                        get|GET|put|PUT|post|POST|
+                        delete|DELETE|patch|PATCH|
+                        head|HEAD|options|OPTIONS|
+                        trace|TRACE|connect|CONNECT
+                    ))*))\}\s+
                     (?<path>\S*)\s*
                     (?<title>\S.*)?
                 $
             }x
+
             def parse_first_line(line)
-                # first line it's the @api {method} path [title]
-                match = @@apiparser.match line
-                raise "Parsing api don't have `path` part (RE: #{@@parser}) raw => #{@raw}" unless match && match[:path]
-                raise "Parsing api don't have `method` part (RE: #{@@parser}) raw => #{@raw}" unless match && match[:method]
+                # first line it's the @api {method} path [title]
+
+                match = API_PARSER.match line
+                raise "Parsing api don't have `path` part (RE: #{API_PARSER}) raw: #{@raw}" unless match && match[:path]
+                raise "Parsing api don't have `method` part (RE: #{API_PARSER}) raw: #{@raw}" unless match && match[:method]
                 @path = match[:path]
                 @method = match[:method]
                 @title = match[:title]

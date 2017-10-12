@@ -1,25 +1,42 @@
 require 'ajd2jkl/version'
+require 'ajd2jkl/config'
 require 'ajd2jkl/glober'
 require 'ajd2jkl/file_parser'
 require 'ajd2jkl/content_parser'
+require 'ajd2jkl/generator'
 require 'commander'
 
 # main module
 module Ajd2jkl
-    @verbose = false
+    @verbose = @debug = false
+
     def self.verbose=(v)
         @verbose = v
     end
 
+    def self.debug?
+        @debug
+    end
+
+    def self.debug=(d)
+        @debug = d
+    end
+
+    # Base class wich manage all
     class Base
-        def initialize(options)
+        def initialize(options, config)
             Ajd2jkl.verbose = options.verbose
+            Ajd2jkl.debug = options.debug
             @options = options
+            @config = config
+            p @config
         end
 
         def launch(src_dir)
+            Commander::UI.color('Warning! Running in dry run mode', :cyan) if @options.dry_run
+
             say("Parse directories : #{src_dir.join(' ')}")
-            phpfiles = File.join("{#{src_dir.join(',')}}", '**', 'routes.php')
+            phpfiles = File.join("{#{src_dir.join(',')}}", '**', '*.php')
 
             gob = Glober.new(@options)
             Dir.glob(phpfiles).each do |phpfile|
@@ -29,10 +46,22 @@ module Ajd2jkl
 
             gob.info
 
-            cp = ::Ajd2jkl::ContentParser::Parser.new(@options)
+            cp = ::Ajd2jkl::ContentParser::Parser.new(@options, @config)
             cp.parse_defines gob.defines
             cp.parse_entries gob.entries
+            cp.groups
+
+            if @options.dry_run
+                Commander::UI.color('Dry run mode... exit', :cyan)
+                exit(0)
+            end
+
+            ::Ajd2jkl::Generator::Base.new(@options, @config, cp).gen
         end
+    end
+
+    def self.debug(str)
+        say(str) if debug?
     end
 
     def self.erase_line

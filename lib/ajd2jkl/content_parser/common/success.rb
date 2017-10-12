@@ -31,12 +31,13 @@ module Ajd2jkl
                 def analyze
                     Ajd2jkl.verbose_say('Analyze Common/Success... ')
                     match = @@parser.match(@raw)
-                    raise "Parsing apiSuccess don't have `field` part (RE: #{@@parser}) raw => #{@raw}" unless match && match[:field]
+                    raise "Parsing apiSuccess don't have `field` part (RE: #{@@parser}) raw: #{@raw}" unless match && match[:field]
                     @group = 'Success 200'
                     @group = match[:group] unless match[:group].nil? || match[:group].strip == ''
                     @type = match[:type] unless match[:type].nil? || match[:type].strip == ''
                     @field = match[:field]
                     @description = match[:description] unless match[:description].nil?
+                    Ajd2jkl.debug("Success Line `#{@raw}`")
                     @raw = nil
                 end
             end

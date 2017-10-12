@@ -12,7 +12,7 @@ module Ajd2jkl
                     (
                         \{(?<type>(
                                 [a-zA-Z]\w*
-                                (\s?\{\d*[-\.]{1,2}\d*\})?
+                                (\s?\{\d*[-\.]{0,2}\d*\})?
                                 (\[\])?
                                 (=[^\}]+)?
                                 |
@@ -33,7 +33,7 @@ module Ajd2jkl
                 def analyze
                     Ajd2jkl.verbose_say('Analyze Common/Param... ')
                     match = @@parser.match(@raw)
-                    raise "Parsing apiParam don't have `field` part (RE: #{@@parser}) raw => #{@raw}" unless match && match[:field]
+                    raise "Parsing apiParam don't have `field` part (RE: #{@@parser}) raw: #{@raw}" unless match && match[:field]
                     @group = match[:group] unless match[:group].nil? || match[:group].strip == ''
                     @type = match[:type] unless match[:type].nil? || match[:type].strip == ''
                     @field = match[:field]

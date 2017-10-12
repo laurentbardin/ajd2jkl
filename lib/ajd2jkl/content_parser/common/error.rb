@@ -23,7 +23,7 @@ module Ajd2jkl
                 def analyze
                     Ajd2jkl.verbose_say('Analyze Common/Error... ')
                     match = @@parser.match(@raw)
-                    raise "Parsing apiError don't have `field` part (RE: #{@@parser}) raw => #{@raw}" unless match && match[:field]
+                    raise "Parsing apiError don't have `field` part (RE: #{@@parser}) raw: #{@raw}" unless match && match[:field]
                     @group = match[:group] unless match[:group].nil? || match[:group].strip == ''
                     @type = match[:type] unless match[:type].nil? || match[:type].strip == ''
                     @field = match[:field]

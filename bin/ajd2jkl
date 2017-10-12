@@ -14,16 +14,22 @@ Commander.configure do
         c.syntax = 'ajd2jkl parse [options] [src_dir ..]'
         c.description = 'Parse the sources in given directories and generate the doc'
         c.option '--dry-run', 'Only parse don\'t generate the doc'
-        c.option '--output', String, 'Output directory default is \'./doc\''
+        c.option '--debug', 'Debug mode'
+        c.option '--output STRING', String, 'Output directory default is \'./doc\''
+        c.option '--imgs STRING', String, 'Images directory to import'
+        c.option '--config STRING', String, 'Configuration file. Json or YAML format'
 
         c.action do |args, options|
-            options.default = { output: './doc', dry_run: false }
+            options.default = { output: './doc', dry_run: false}
             if args.count.zero?
                 say("<%= color('You should give at least one source directy', :red) %>")
                 command(:help).run(['parse'])
                 exit 1
             end
-            Ajd2jkl::Base.new(options).launch args
+            config = {}
+            config = Ajd2jkl::Config.new(options.config).extract if options.config
+            a2j = Ajd2jkl::Base.new options, config
+            a2j.launch args
         end
     end
 
